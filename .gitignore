@@ -26,3 +26,4 @@
 *.exe
 *.out
 *.app
+/RSA_new/bin/Debug/RSA_new.exe.config
