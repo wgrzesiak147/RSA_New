@@ -10,5 +10,12 @@
             Index = _index;
             Distance = _distance;
         }
+
+        public CLink(CLink b) {
+            this.Index = b.Index;
+            this.NodeA = b.NodeA;
+            this.NodeB = b.NodeB;
+            this.Distance = b.Distance;
+        }
     }
 }

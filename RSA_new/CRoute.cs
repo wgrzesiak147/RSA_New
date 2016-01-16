@@ -27,8 +27,10 @@ namespace RSA_new {
                 Distance += link.Distance;
             }
         }
-        public CRoute(int _routeIndex, List<int> _indexes) {
+        public CRoute(int _routeIndex, int _startNode, int _endNode, List<int> _indexes) {
             Index = _routeIndex;
+            NodeBegin = _startNode;
+            NodeFinish = _endNode;
             string route = String.Empty;
             for (int i = 0; i < _indexes.Count; i++) {
                 route += _indexes[i].ToString() + " ";
@@ -44,12 +46,22 @@ namespace RSA_new {
                     }
                 }
             }
-
             if (tmpLinkList.Count == 0) throw new ArgumentException("Route does not contain any links");
             //if (!IsContinuous(tmpLinkList)) throw new ArgumentException("Route " + route + " is not traversable");
-            passedLinks = new List<CLink>(tmpLinkList);
-            NodeBegin = passedLinks[0].NodeA;
-            NodeFinish = passedLinks[passedLinks.Count - 1].NodeB;
+
+            passedLinks = new List<CLink>();
+
+            int tmpNodeA = _startNode;
+            for (int i = 0; i < tmpLinkList.Count; i++) {
+                if (i == 0 && IsContinuous(tmpLinkList)) { break; }
+                if (tmpLinkList[i].NodeA != tmpNodeA) {
+                    CLink tmpCLink = tmpLinkList.Find(x => x.NodeA == tmpNodeA);
+                    tmpNodeA = tmpCLink.NodeB;
+                } else {
+                    passedLinks.Add(new CLink(tmpLinkList.Find(x => x.NodeA == tmpNodeA)));
+                    tmpNodeA = passedLinks[passedLinks.Count - 1].NodeB;
+                }
+            }
             passedNodes = new List<int>(
                 from cLink in passedLinks
                 select cLink.NodeA);
@@ -57,16 +69,6 @@ namespace RSA_new {
             foreach (var link in passedLinks) {
                 Distance += link.Distance;
             }
-        }
-        public CRoute(CLink _link) {
-            passedLinks = new List<CLink>();
-            passedLinks.Add(_link);
-            NodeBegin = _link.NodeA;
-            NodeFinish = _link.NodeB;
-            passedNodes = new List<int>();
-            passedNodes.Add(NodeBegin);
-            passedNodes.Add(NodeFinish);
-            Distance += _link.Distance;
         }
 
         public List<int> ReturnPassedNodes() { return passedNodes; }
