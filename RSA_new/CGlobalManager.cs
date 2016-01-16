@@ -32,7 +32,11 @@ namespace RSA_new {
                         else
                         {
                             List<int> _line = line.Split(' ').Select(Int32.Parse).ToList();
-                            List<CRequest> RequestList = _manager.CalculateRequestFromLine(LineCounter -1,_line);
+                            List<CRequest> RequestList = _manager.CalculateRequestFromLine(_line);
+                            foreach (var request in RequestList)
+                            {
+                                GlobalRequestList.Add(request);
+                            }
                         }
                     }
                 }
@@ -67,14 +71,12 @@ namespace RSA_new {
 
                         else
                         {
-                            List<int> _line = line.Split('\t').Select(Int32.Parse).ToList();
-                            int _nodeA = lineCounter - 2;
-                            List<CLink> linkList = _manager.CalculateLinksFromLine(_nodeA, _line);
+                            List<int> _line = line.Split(' ').Select(Int32.Parse).ToList();
+                            List<CLink> linkList = _manager.CalculateLinksFromLine(lineCounter - 2,_line);
                             foreach (var link in linkList)
                             {
                                 GlobalLinkList.Add(link);
                             }
-                            lineCounter++;
                         }
                     }
                 }
@@ -162,15 +164,14 @@ namespace RSA_new {
             return result;     
         }
 
-        private List<CRequest> CalculateRequestFromLine(int nodeAindex, List<int> line)
+        private List<CRequest> CalculateRequestFromLine(List<int> line)
         {
             List<CRequest> result = new List<CRequest>();
             for (int i = 0; i > line.Count; i++)
             {
                 if (line[i] > 0)
                 {
-                    result.Add(new CRequest(requestCounter, i, line[i]));
-                    requestCounter++;
+                    result.Add(new CRequest(line[i], line[i+1], line[i+2]));
                 }
             }
             return result;
