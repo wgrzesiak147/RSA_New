@@ -1,5 +1,5 @@
 ﻿namespace RSA_new {
-    class CLink {
+    public class CLink {
         public int Index { get; set; }
         public int NodeA { get; set; }
         public int NodeB { get; set; }

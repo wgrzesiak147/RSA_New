@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 
 namespace RSA_new {
-    class CGlobalManager {
+    public class CGlobalManager {
         public static List<CRoute> GlobalRoutesList = new List<CRoute>();
         public static List<CLink> GlobalLinkList = new List<CLink>();
         public static void LoadLinks(string _topologyFilePath) {

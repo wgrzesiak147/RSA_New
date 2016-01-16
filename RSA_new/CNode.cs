@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 namespace RSA_new {
-    class CNode {
+    public class CNode {
         private static int count = 0;
         // Neighboring nodes
         private List<int> neighborList;

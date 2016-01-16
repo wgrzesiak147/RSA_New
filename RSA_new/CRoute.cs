@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace RSA_new {
-    class CRoute {
+    public class CRoute {
         private List<int> passedNodes;
         private List<CLink> passedLinks;
         public int NodeBegin { get; set; } = -1;
