@@ -34,12 +34,12 @@ namespace RSA_new
             while (_startTemperature > _endTemperature) {   //Annealing algorithm starts iterate here
                 _sol = MakeMutation(sol);       // we take next random solution
                 cost_Sol = _sol.GetCost();      // taking the cost of next solution
-
                 if (cost_Sol < costBestSol) {     //checking if the new solution is better than old one
                      bestSol = _sol;
                     costBestSol = cost_Sol;
                 }
-                double delta = cost_Sol - costSol; //some algorithm calculation ...
+                #region algorithm calculation ...
+                double delta = cost_Sol - costSol;
                 if (delta < 0){
                     sol = _sol;
                     costSol = cost_Sol;
@@ -52,6 +52,7 @@ namespace RSA_new
                         costSol = cost_Sol;
                     }
                 }
+#endregion
                 _startTemperature *= _annealingParameter; // we decrease the start temperature by the annealingParameter
             } 
             return bestSol;
