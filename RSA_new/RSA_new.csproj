@@ -43,11 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithm.cs" />
+    <Compile Include="AnnealingAlgorithm.cs" />
     <Compile Include="CGlobalManager.cs" />
     <Compile Include="CLink.cs" />
     <Compile Include="CNode.cs" />
     <Compile Include="CRoute.cs" />
+    <Compile Include="Entities\Request.cs" />
     <Compile Include="Entities\Solution.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

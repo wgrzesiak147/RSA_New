@@ -7,14 +7,14 @@ using RSA_new.Entities;
 
 namespace RSA_new
 {
-   public class Algorithm
+   public class AnnealingAlgorithm
    {
        private double _startTemperature = 1000;
        private double _endTemperature = 10;
        private double _annealingParameter = 0.99;
 
       //Constructor initializes the algorithms parameters
-       public Algorithm(double startTemperature, double endTemperature, double annealingParameter){
+       public AnnealingAlgorithm(double startTemperature, double endTemperature, double annealingParameter){
            _startTemperature = startTemperature;
            _endTemperature = endTemperature;
            _annealingParameter = annealingParameter;

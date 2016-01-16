@@ -8,7 +8,7 @@ namespace RSA_new.Entities
 {
    public class Solution
    {
-       public List<CRoute> RoutesCollection;
+       public List<CRoute> RoutesCollection = new List<CRoute>();
        private int cost = 0;
         
         public Solution GetRandomSolution(){
