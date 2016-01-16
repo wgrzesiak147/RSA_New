@@ -22,9 +22,11 @@ namespace RSA_new {
         public CRoute(List<int> _indexes) {
             List<CLink> tmpLinkList = new List<CLink>();
             for (int j = 0; j < _indexes.Count; j++) {
-                for (int i = 0; i < CGlobalManager.GlobalLinkList.Count; i++) {
-                    if (CGlobalManager.GlobalLinkList[i].Index == _indexes[j]) {
-                        tmpLinkList.Add(CGlobalManager.GlobalLinkList[i]);
+                if (CGlobalManager.GlobalLinkList.Count != 0) {
+                    for (int i = 0; i < CGlobalManager.GlobalLinkList.Count; i++) {
+                        if (CGlobalManager.GlobalLinkList[i].Index == _indexes[j]) {
+                            tmpLinkList.Add(CGlobalManager.GlobalLinkList[i]);
+                        }
                     }
                 }
             }
