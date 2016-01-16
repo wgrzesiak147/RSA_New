@@ -7,11 +7,48 @@ namespace RSA_new {
     public class CGlobalManager {
         public static List<CRoute> GlobalRoutesList = new List<CRoute>();
         public static List<CLink> GlobalLinkList = new List<CLink>();
-        public static void LoadLinks(string _topologyFilePath) {
-            if (GlobalLinkList == null) {
+        public static int linkCounter = 0;
 
+        public static void LoadLinks(string _topologyFilePath)
+        {
+            if (GlobalLinkList == null)
+            {
+                CGlobalManager _manager = new CGlobalManager();
+                using (StreamReader topologyFile = new StreamReader(_topologyFilePath))
+                {
+                    int NodeQuantity = 0;
+                    int LinkQuantity = 0;
+                    int lineCounter = 0;
+                    
+                    string line;
+                    while ((line = topologyFile.ReadLine()) != null)
+                    {
+                        if (lineCounter == 0)
+                        {
+                            Int32.TryParse(line, out NodeQuantity);
+                            lineCounter++;
+                        }
+
+                        else if (lineCounter == 1)
+                        {
+                            Int32.TryParse(line, out LinkQuantity);
+                            lineCounter++;
+                        }
+
+                        else
+                        {
+                            List<int> _line = line.Split(' ').Select(Int32.Parse).ToList();
+                            List<CLink> linkList = _manager.CalculateLinksFromLine(lineCounter - 2,_line);
+                            foreach (var link in linkList)
+                            {
+                                GlobalLinkList.Add(link);
+                            }
+                        }
+                    }
+                }
             }
         }
+
         public static void LoadRoutes(string _routeFilePath) {
             if (GlobalRoutesList.Count == 0) {
                 CGlobalManager _manager = new CGlobalManager();
@@ -63,16 +100,17 @@ namespace RSA_new {
             return result;
         }
 
-        private List<int> CalculateFromLine(List<int> line) {
-            List<int> result = new List<int>();
-            int counter = 0;
-            foreach (var element in line) {
-                if (element == 1) { //in case of route creation: if element == 1 it means that this link is used in this route
-                    result.Add(counter);
+        private List<CLink> CalculateLinksFromLine(int nodeAIndex, List<int> line) {
+            List<CLink> result = new List<CLink>();
+            for (int i = 0; i < line.Count; i++)
+            {
+                if (line[i] > 0)
+                {
+                    result.Add(new CLink(linkCounter, nodeAIndex, i, line[i]));
+                    linkCounter++;
                 }
-                counter++;
             }
-            return result;
+            return result;     
         }
     }
 }
