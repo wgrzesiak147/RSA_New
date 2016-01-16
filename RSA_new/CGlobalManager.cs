@@ -67,12 +67,14 @@ namespace RSA_new {
 
                         else
                         {
-                            List<int> _line = line.Split(' ').Select(Int32.Parse).ToList();
-                            List<CLink> linkList = _manager.CalculateLinksFromLine(lineCounter - 2,_line);
+                            List<int> _line = line.Split('\t').Select(Int32.Parse).ToList();
+                            int _nodeA = lineCounter - 2;
+                            List<CLink> linkList = _manager.CalculateLinksFromLine(_nodeA, _line);
                             foreach (var link in linkList)
                             {
                                 GlobalLinkList.Add(link);
                             }
+                            lineCounter++;
                         }
                     }
                 }

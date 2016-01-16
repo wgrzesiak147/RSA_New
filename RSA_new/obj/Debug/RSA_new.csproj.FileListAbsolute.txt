@@ -17,3 +17,9 @@ D:\maciek\Magister\semestr 2\Nowy folder (2)\RSA_new\obj\Debug\RSA_new.pdb
 D:\maciek\Magister\semestr 2\Nowy folder (2)\RSA_new\bin\Debug\RSA_new.exe
 D:\maciek\Magister\semestr 2\Nowy folder (2)\RSA_new\bin\Debug\RSA_new.pdb
 D:\maciek\Magister\semestr 2\Nowy folder (2)\RSA_new\obj\Debug\RSA_new.csprojResolveAssemblyReference.cache
+C:\Studia\Goścień\C#\RSA_New\RSA_new\bin\Debug\RSA_new.exe.config
+C:\Studia\Goścień\C#\RSA_New\RSA_new\bin\Debug\RSA_new.exe
+C:\Studia\Goścień\C#\RSA_New\RSA_new\bin\Debug\RSA_new.pdb
+C:\Studia\Goścień\C#\RSA_New\RSA_new\obj\Debug\RSA_new.csprojResolveAssemblyReference.cache
+C:\Studia\Goścień\C#\RSA_New\RSA_new\obj\Debug\RSA_new.exe
+C:\Studia\Goścień\C#\RSA_New\RSA_new\obj\Debug\RSA_new.pdb

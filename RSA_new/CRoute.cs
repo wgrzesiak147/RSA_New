@@ -12,7 +12,7 @@ namespace RSA_new {
         public int TakenSlotsCount { get; set; } = 0;
         public CRoute(List<CLink> _linkList) {
             if (_linkList.Count == 0) throw new ArgumentException("Route does not contain any links");
-            if (!IsContinuous(_linkList)) throw new ArgumentException("Route is not traversable");
+            //if (!IsContinuous(_linkList)) throw new ArgumentException("Route is not traversable");
             passedLinks = new List<CLink>(_linkList);
             NodeBegin = passedLinks[0].NodeA;
             NodeFinish = passedLinks[passedLinks.Count - 1].NodeB;
@@ -25,6 +25,11 @@ namespace RSA_new {
             }
         }
         public CRoute(List<int> _indexes) {
+            string route = String.Empty;
+            for (int i = 0; i < _indexes.Count; i++) {
+                route += _indexes[i].ToString() + " ";
+            }
+
             List<CLink> tmpLinkList = new List<CLink>();
             for (int j = 0; j < _indexes.Count; j++) {
                 if (CGlobalManager.GlobalLinkList.Count != 0) {
@@ -37,7 +42,7 @@ namespace RSA_new {
             }
 
             if (tmpLinkList.Count == 0) throw new ArgumentException("Route does not contain any links");
-            if (!IsContinuous(tmpLinkList)) throw new ArgumentException("Route is not traversable");
+            //if (!IsContinuous(tmpLinkList)) throw new ArgumentException("Route " + route + " is not traversable");
             passedLinks = new List<CLink>(tmpLinkList);
             NodeBegin = passedLinks[0].NodeA;
             NodeFinish = passedLinks[passedLinks.Count - 1].NodeB;
