@@ -43,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CGlobalManager.cs" />
+    <Compile Include="CLink.cs" />
+    <Compile Include="CNode.cs" />
+    <Compile Include="CRoute.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
