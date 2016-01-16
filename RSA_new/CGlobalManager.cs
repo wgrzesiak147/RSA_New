@@ -2,16 +2,46 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using RSA_new.Entities;
 
 namespace RSA_new {
     public class CGlobalManager {
         public static List<CRoute> GlobalRoutesList = new List<CRoute>();
         public static List<CLink> GlobalLinkList = new List<CLink>();
+        public static List<CRequest> GlobalRequestList = new List<CRequest>(); 
         public static int linkCounter = 0;
+        public static int requestCounter = 0;
+
+        public static void LoadRequest(string _requestFilePath)
+        {
+            if (GlobalRequestList.Count == 0)
+            {
+                CGlobalManager _manager = new CGlobalManager();
+                using (StreamReader requestFile = new StreamReader(_requestFilePath))
+                {
+                    int LineCounter = 0;
+                    int RequestQuantity = 0;
+                    string line;
+                    while((line = requestFile.ReadLine()) != null)
+                    {
+                        if (LineCounter == 0)
+                        {
+                            Int32.TryParse(line, out RequestQuantity);
+                            LineCounter++;
+                        }
+                        else
+                        {
+                            List<int> _line = line.Split(' ').Select(Int32.Parse).ToList();
+                            List<CRequest> RequestList = _manager.CalculateRequestFromLine(LineCounter -1,_line);
+                        }
+                    }
+                }
+            }
+        }
 
         public static void LoadLinks(string _topologyFilePath)
         {
-            if (GlobalLinkList == null)
+            if (GlobalLinkList.Count == 0)
             {
                 CGlobalManager _manager = new CGlobalManager();
                 using (StreamReader topologyFile = new StreamReader(_topologyFilePath))
@@ -112,5 +142,19 @@ namespace RSA_new {
             }
             return result;     
         }
+
+        private List<CRequest> CalculateRequestFromLine(int nodeAindex, List<int> line)
+        {
+            List<CRequest> result = new List<CRequest>();
+            for (int i = 0; i > line.Count; i++)
+            {
+                if (line[i] > 0)
+                {
+                    result.Add(new CRequest(requestCounter, i, line[i]));
+                    requestCounter++;
+                }
+            }
+            return result;
+        } 
     }
 }
