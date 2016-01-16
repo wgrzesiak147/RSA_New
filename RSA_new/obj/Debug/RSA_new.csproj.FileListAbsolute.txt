@@ -6,9 +6,7 @@ E:\Studia\Goścień\C#\RSA_New\RSA_new\bin\Debug\RSA_new.pdb
 E:\Studia\Goścień\C#\RSA_New\RSA_new\obj\Debug\RSA_new.csprojResolveAssemblyReference.cache
 E:\Studia\Goścień\C#\RSA_New\RSA_new\obj\Debug\RSA_new.exe
 E:\Studia\Goścień\C#\RSA_New\RSA_new\obj\Debug\RSA_new.pdb
-D:\maciek\Magister\semestr 2\Nowy folder (2)\RSA_new\bin\Debug\RSA_new.exe.config
-D:\maciek\Magister\semestr 2\Nowy folder (2)\RSA_new\bin\Debug\RSA_new.exe
-D:\maciek\Magister\semestr 2\Nowy folder (2)\RSA_new\bin\Debug\RSA_new.pdb
-D:\maciek\Magister\semestr 2\Nowy folder (2)\RSA_new\obj\Debug\RSA_new.csprojResolveAssemblyReference.cache
-D:\maciek\Magister\semestr 2\Nowy folder (2)\RSA_new\obj\Debug\RSA_new.exe
-D:\maciek\Magister\semestr 2\Nowy folder (2)\RSA_new\obj\Debug\RSA_new.pdb
+C:\GIT\RSA_New\RSA_new\bin\Debug\RSA_new.exe
+C:\GIT\RSA_New\RSA_new\bin\Debug\RSA_new.pdb
+C:\GIT\RSA_New\RSA_new\obj\Debug\RSA_new.exe
+C:\GIT\RSA_New\RSA_new\obj\Debug\RSA_new.pdb
