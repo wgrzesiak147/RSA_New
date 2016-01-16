@@ -22,8 +22,14 @@ namespace RSA_new {
                     int LineCounter = 0;
                     int RequestQuantity = 0;
                     string line;
-                    while((line = requestFile.ReadLine()) != null)
-                    {
+                    while((line = requestFile.ReadLine()) != null) {
+                        if (line[0] == ' ') { line = line.Remove(0, 1); }
+                        for (int i = 0; i < line.Length; i++) {
+                            if (i > 0 &&
+                                line[i-1] == ' ') {
+                                line = line.Remove(i, 1);
+                            }
+                        }
                         if (LineCounter == 0)
                         {
                             Int32.TryParse(line, out RequestQuantity);
@@ -71,12 +77,13 @@ namespace RSA_new {
 
                         else
                         {
-                            List<int> _line = line.Split(' ').Select(Int32.Parse).ToList();
-                            List<CLink> linkList = _manager.CalculateLinksFromLine(lineCounter - 2,_line);
-                            foreach (var link in linkList)
-                            {
+                            List<int> _line = line.Split('\t').Select(Int32.Parse).ToList();
+                            int _nodeA = lineCounter - 2;
+                            List<CLink> linkList = _manager.CalculateLinksFromLine(_nodeA, _line);
+                            foreach (var link in linkList) {
                                 GlobalLinkList.Add(link);
                             }
+                            lineCounter++;
                         }
                     }
                 }
