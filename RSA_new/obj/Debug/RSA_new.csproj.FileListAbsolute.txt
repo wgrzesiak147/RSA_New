@@ -1,3 +1,4 @@
 C:\GIT\RSA_New\RSA_new\RSA_new\bin\Debug\RSA_new.exe.config
 C:\GIT\RSA_New\RSA_new\bin\Debug\RSA_new.exe.config
 E:\Studia\Goścień\C#\RSA_New\RSA_new\bin\Debug\RSA_new.exe.config
+C:\GIT\RSA_New\RSA_new\obj\Debug\RSA_new.csprojResolveAssemblyReference.cache
