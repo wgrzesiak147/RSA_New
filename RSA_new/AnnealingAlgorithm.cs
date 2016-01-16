@@ -9,12 +9,12 @@ namespace RSA_new
 {
    public class AnnealingAlgorithm
    {
-       private double _startTemperature = 1000;
-       private double _endTemperature = 10;
-       private double _annealingParameter = 0.99;
+       private double _startTemperature;
+       private readonly double _endTemperature;
+       private readonly double _annealingParameter;
 
       //Constructor initializes the algorithms parameters
-       public AnnealingAlgorithm(double startTemperature, double endTemperature, double annealingParameter){
+       public AnnealingAlgorithm(double startTemperature = 1000, double endTemperature = 10, double annealingParameter = 0.99){
            _startTemperature = startTemperature;
            _endTemperature = endTemperature;
            _annealingParameter = annealingParameter;
@@ -58,10 +58,13 @@ namespace RSA_new
             return bestSol;
         }
 
-       private Solution MakeMutation(Solution sol)
-       {
-            //method that changes the Solution randomly
-           return sol;
+       private Solution MakeMutation(Solution sol){
+          Random rnd = new Random();
+          int random = rnd.Next(sol.RoutesCollection.Count - 1);
+          int startNode = sol.RoutesCollection.ElementAt(random).NodeBegin;
+          int endNode = sol.RoutesCollection.ElementAt(random).NodeFinish;
+         // Solution.GetRandomValuesForRequest(new CRequest()) //TODO : blocked untill slots solution will be solved
+          return sol;
        }
    }
 }
