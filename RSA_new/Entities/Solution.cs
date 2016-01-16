@@ -13,6 +13,10 @@ namespace RSA_new.Entities
         
         public Solution GetRandomSolution(){
 
+            foreach (var request in CGlobalManager.GlobalRequestList)
+            {
+               //List<CRoute> routes = CGlobalManager.GlobalRoutesList
+            }
             return new Solution();
         }
 

@@ -10,7 +10,6 @@ C:\GIT\RSA_New\RSA_new\bin\Debug\RSA_new.exe
 C:\GIT\RSA_New\RSA_new\bin\Debug\RSA_new.pdb
 C:\GIT\RSA_New\RSA_new\obj\Debug\RSA_new.exe
 C:\GIT\RSA_New\RSA_new\obj\Debug\RSA_new.pdb
-C:\GIT\RSA_New\RSA_new\obj\Debug\RSA_new.csprojResolveAssemblyReference.cache
 D:\maciek\Magister\semestr 2\Nowy folder (2)\RSA_new\bin\Debug\RSA_new.exe.config
 D:\maciek\Magister\semestr 2\Nowy folder (2)\RSA_new\obj\Debug\RSA_new.exe
 D:\maciek\Magister\semestr 2\Nowy folder (2)\RSA_new\obj\Debug\RSA_new.pdb
