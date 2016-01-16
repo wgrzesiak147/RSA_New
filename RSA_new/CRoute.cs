@@ -8,6 +8,8 @@ namespace RSA_new {
         private List<CLink> passedLinks;
         public int NodeBegin { get; set; } = -1;
         public int NodeFinish { get; set; } = -1;
+        public int Distance { get; set; } = 0;
+        public int TakenSlotsCount { get; set; } = 0;
         public CRoute(List<CLink> _linkList) {
             if (_linkList.Count == 0) throw new ArgumentException("Route does not contain any links");
             if (!IsContinuous(_linkList)) throw new ArgumentException("Route is not traversable");
@@ -18,6 +20,9 @@ namespace RSA_new {
                 from cLink in passedLinks
                 select cLink.NodeA);
             passedNodes.Add(NodeFinish);
+            foreach (var link in passedLinks) {
+                Distance += link.Distance;
+            }
         }
         public CRoute(List<int> _indexes) {
             List<CLink> tmpLinkList = new List<CLink>();
@@ -40,6 +45,9 @@ namespace RSA_new {
                 from cLink in passedLinks
                 select cLink.NodeA);
             passedNodes.Add(NodeFinish);
+            foreach (var link in passedLinks) {
+                Distance += link.Distance;
+            }
         }
         public CRoute(CLink _link) {
             passedLinks = new List<CLink>();
@@ -49,6 +57,7 @@ namespace RSA_new {
             passedNodes = new List<int>();
             passedNodes.Add(NodeBegin);
             passedNodes.Add(NodeFinish);
+            Distance += _link.Distance;
         }
         public List<int> ReturnPassedNodes() { return passedNodes; }
         private bool IsContinuous(List<CLink> _linkList) {
