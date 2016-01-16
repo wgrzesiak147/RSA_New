@@ -53,7 +53,11 @@ namespace RSA_new {
 
             int tmpNodeA = _startNode;
             for (int i = 0; i < tmpLinkList.Count; i++) {
-                if (i == 0 && IsContinuous(tmpLinkList)) { break; }
+                if (i == 0 &&
+                    IsContinuous(tmpLinkList)) {
+                    passedLinks = tmpLinkList;
+                    break;
+                }
                 passedLinks.Add(new CLink(tmpLinkList.Find(x => x.NodeA == tmpNodeA)));
                 tmpNodeA = passedLinks[passedLinks.Count - 1].NodeB;
             }
