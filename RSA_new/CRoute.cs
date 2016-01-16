@@ -6,10 +6,13 @@ namespace RSA_new {
     public class CRoute {
         private List<int> passedNodes;
         private List<CLink> passedLinks;
+        public int Index { get; set; } = -1;
         public int NodeBegin { get; set; } = -1;
         public int NodeFinish { get; set; } = -1;
         public int Distance { get; set; } = 0;
         public int TakenSlotsCount { get; set; } = 0;
+        public Dictionary<int, int> DemandSlotMapping = null;
+
         public CRoute(List<CLink> _linkList) {
             if (_linkList.Count == 0) throw new ArgumentException("Route does not contain any links");
             //if (!IsContinuous(_linkList)) throw new ArgumentException("Route is not traversable");
@@ -24,7 +27,8 @@ namespace RSA_new {
                 Distance += link.Distance;
             }
         }
-        public CRoute(List<int> _indexes) {
+        public CRoute(int _routeIndex, List<int> _indexes) {
+            Index = _routeIndex;
             string route = String.Empty;
             for (int i = 0; i < _indexes.Count; i++) {
                 route += _indexes[i].ToString() + " ";
@@ -64,6 +68,7 @@ namespace RSA_new {
             passedNodes.Add(NodeFinish);
             Distance += _link.Distance;
         }
+
         public List<int> ReturnPassedNodes() { return passedNodes; }
         private bool IsContinuous(List<CLink> _linkList) {
             int tmpNode = _linkList[0].NodeA;
@@ -72,6 +77,11 @@ namespace RSA_new {
                 tmpNode = link.NodeB;
             }
             return true;
+        }
+        public void LoadMappings(Dictionary<int, int> _slotMap) {
+            if (DemandSlotMapping == null) {
+                DemandSlotMapping = _slotMap;
+            }
         }
     }
 }

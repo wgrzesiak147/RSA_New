@@ -95,7 +95,8 @@ namespace RSA_new {
                         else {
                             List<int> _line = line.Split(' ').Select(Int32.Parse).ToList();
                             List<int> linkIndexes = _manager.CalculateRouteFromBinary(_line);
-                            GlobalRoutesList.Add(new CRoute(linkIndexes));
+                            GlobalRoutesList.Add(new CRoute(lineCounter - 1, linkIndexes));
+                            lineCounter++;
                             #region OLDCODE - can be deleted I think...
                             //if (startNodeNumber == endNodeNumber) { endNodeNumber++; }
                             //Incrementing index for route
@@ -115,6 +116,22 @@ namespace RSA_new {
                             #endregion
                         }
                     }
+                }
+            }
+        }
+
+        public static void LoadRouteSlotMappings(string _slotMapFilePath) {
+            using (StreamReader slotMapFile = new StreamReader(_slotMapFilePath)) {
+                string line;
+                int lineCounter = 0;
+                while ((line = slotMapFile.ReadLine()) != null) {
+                    Dictionary<int, int> DemandSlotMap = new Dictionary<int, int>();
+                    List<int> _line = line.Split('\t').Select(Int32.Parse).ToList();
+                    for (int i = 0; i < _line.Count; i++) {
+                        DemandSlotMap.Add((i+1)*10,_line[i]);
+                    }
+                    GlobalRoutesList.Find(x => x.Index == lineCounter).LoadMappings(DemandSlotMap); // THIS SHOULD DO THE TRICK
+                    lineCounter++;
                 }
             }
         }
