@@ -20,17 +20,23 @@ namespace RSA_new.Entities
             return this;
         }
 
-       public static CRoute GetRandomValuesForRequest(CRequest request)
-       {
+       public static CRoute GetRandomValuesForRequest(CRequest request){
            List<CRoute> routes =
                CGlobalManager.GlobalRoutesList.Where(
-                   x => x.NodeBegin == request.StartNode && x.NodeFinish == request.EndNode).ToList();
-               //linq that takes all routes for this request
+                   x => x.NodeBegin == request.StartNode && x.NodeFinish == request.EndNode).ToList();  //linq that takes all routes for this request
+
            Random rnd = new Random();
            int random = rnd.Next(routes.Count() - 1);
            CRoute randomRoute = routes.ElementAt(random); //we take random route 
-           return randomRoute;
-            // here we have draw random channels/slots?? we have to delete this route flor CGlobal //TODO : blocked untill slots solution will be solved
+           var slotsQuantity = randomRoute.DemandSlotMapping[request.Size]; //we are looking for slots quantity for this request size
+           while (!randomRoute.AlocateSlots(slotsQuantity)) //When there is no free slots we have to find new random route TODO: if no route will be found propably stack overflow
+           {
+              random = rnd.Next(routes.Count() - 1);
+              randomRoute = routes.ElementAt(random); //we take random route 
+              slotsQuantity = randomRoute.DemandSlotMapping[request.Size];
+            }
+            randomRoute.TakenSlotsCount += slotsQuantity;
+            return randomRoute;
         }
 
 

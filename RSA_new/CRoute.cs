@@ -12,7 +12,24 @@ namespace RSA_new {
         public int Distance { get; set; } = 0;
         public int TakenSlotsCount { get; set; } = 0;
         public Dictionary<int, int> DemandSlotMapping = null;
+        public bool[] TakenSlotsArray = new bool[40];
 
+       // /This method takes first found free slot on SlotsArray and it allocates the request
+        public bool AlocateSlots(int numberOfSLots){
+            for (int i = 0; i < TakenSlotsArray.Length; i++)
+            {
+                if (TakenSlotsArray[i] == false && (i + numberOfSLots) < TakenSlotsArray.Length)
+                {
+                    for (int j = 0; j < numberOfSLots; j++)
+                    { 
+                        TakenSlotsArray[i] = true;
+                        i++;
+                    }
+                    return true;
+                }
+            }
+            return false;
+        }
         public CRoute(int _routeIndex, int _startNode, int _endNode, List<int> _indexes) {
             Index = _routeIndex;
             NodeBegin = _startNode;
