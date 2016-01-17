@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 
 namespace RSA_new {
-    public class CLink {
+    public class CLink
+    {
         public int Index { get; set; }
         public int NodeA { get; set; }
         public int NodeB { get; set; }
@@ -12,7 +13,7 @@ namespace RSA_new {
 
         // /This method takes first found free slot on SlotsArray and it allocates the request
 
-       
+
 
         public bool TryAlocateSlots(int numberOfSLots, int requestId)
         {
@@ -32,7 +33,7 @@ namespace RSA_new {
 
         public void AllocateSlots(int numberOfSLots, int index, int requestId) //in this method we are sure that allocation is possible
         {
-            for (int j = index; j < index+numberOfSLots; j++)
+            for (int j = index; j < index + numberOfSLots; j++)
             {
                 TakenSlotsArray[j] = true;
                 TakenSlotsCount++;
@@ -58,14 +59,16 @@ namespace RSA_new {
             return true;
         }
 
-        public CLink(int _index, int _nodeA, int _nodeB, int _distance) {
+        public CLink(int _index, int _nodeA, int _nodeB, int _distance)
+        {
             NodeA = _nodeA;
             NodeB = _nodeB;
             Index = _index;
             Distance = _distance;
         }
 
-        public CLink(CLink b) {
+        public CLink(CLink b)
+        {
             this.Index = b.Index;
             this.NodeA = b.NodeA;
             this.NodeB = b.NodeB;
@@ -73,3 +76,4 @@ namespace RSA_new {
         }
     }
 }
+
