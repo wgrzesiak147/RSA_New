@@ -17,8 +17,8 @@ namespace RSA_new.Entities
        }
        public Solution(Solution source)
        {
-          Solution result = new Solution();
-          result.RoutesCollection = new List<CRoute>(RoutesCollection);
+           this.RoutesCollection = new List<CRoute>(source.RoutesCollection);
+           this.cost = source.GetCost();
        }
         public Solution GetRandomSolution(){
             foreach (var request in CGlobalManager.GlobalRequestList)
@@ -51,14 +51,14 @@ namespace RSA_new.Entities
 
 
         public int GetCost(){
-        cost = 0;
-        if(!RoutesCollection.Any())
+            cost = 0;
+            if(!RoutesCollection.Any())
                 throw  new Exception("Can't get cost of empty solution!");
-        foreach (var route in RoutesCollection)
-        {
-            cost += route.Distance*route.TakenSlotsCount;
-        }
-          return cost;
+            foreach (var route in RoutesCollection)
+            {
+                cost += route.Distance*route.TakenSlotsCount;
+            }
+            return cost;
        }
 
        public void PrintSolution(int solutionId)
