@@ -75,10 +75,18 @@ namespace RSA_new
            }
 
           CRequest req = CGlobalManager.GlobalRequestList.FirstOrDefault(x => x.Id == requestAndSlots.Key);// we are looking for this request and one more time randomly allocating somewhere
-          CRoute newRoute = Solution.GetRandomRouteForRequest(req);
-          randomRoute.FreeSlots(requestAndSlots); //Free the slots on the previous route
+          CRoute newRoute = Solution.GetRandomRouteForRequest(req); //Trying to find new route for this request
 
-          sol.RoutesCollection.Remove(randomRoute);
+          while (newRoute == null || (!newRoute.TakenSlotsArrayForRequest.Any())) // doing this untill it will be found
+          {
+                newRoute = Solution.GetRandomRouteForRequest(req);
+          }
+          randomRoute.FreeSlots(requestAndSlots); //Free the slots on the previous route
+ 
+            if (!randomRoute.TakenSlotsArrayForRequest.Any()) //If the previous route hasn't any other request then delete it from solution
+           {
+                sol.RoutesCollection.Remove(randomRoute);
+           }
           sol.RoutesCollection.Add(newRoute);
           sol.PrintSolution(counter);
           return sol;

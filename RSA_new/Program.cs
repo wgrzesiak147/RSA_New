@@ -21,10 +21,8 @@ namespace RSA_new {
 
             AnnealingAlgorithm alg = new AnnealingAlgorithm();
             Solution sol =  alg.CalculateSolution();
-            //CRoute newRoute = new CRoute(newList);
-            //foreach (var node in newRoute.ReturnPassedNodes()) {
-            //    Console.WriteLine(node);
-            //}
+            sol.PrintSolution(99999);
+         
         }
     }
 }

@@ -34,7 +34,7 @@ namespace RSA_new.Entities
               randomRoute = routes.ElementAt(random); //we take random route 
               slotsQuantity = randomRoute.DemandSlotMapping[request.Size];
            }
-          //  randomRoute.TakenSlotsCount += slotsQuantity;
+
             return randomRoute;
         }
 
@@ -54,7 +54,7 @@ namespace RSA_new.Entities
        {
           string  result = "";
           result+= "Solution {" +solutionId + "} ";
-          result += "Cost: {" + cost + "} ";
+          result += "Cost: {" + cost + "} \n";
             foreach (var route in RoutesCollection)
            {
                foreach (var requestAndSlots in route.TakenSlotsArrayForRequest)
@@ -66,7 +66,7 @@ namespace RSA_new.Entities
                     {
                         slots += slot;
                     }
-                    result += " TakenSlots: {" + slots + "} " + System.Environment.NewLine;
+                    result += " TakenSlots: {" + slots + "} \n";
                 }
            }
            Console.WriteLine(result);
