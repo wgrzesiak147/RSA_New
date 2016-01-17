@@ -77,12 +77,12 @@ namespace RSA_new
           CRequest req = CGlobalManager.GlobalRequestList.FirstOrDefault(x => x.Id == requestAndSlots.Key);// we are looking for this request and one more time randomly allocating somewhere
           CRoute newRoute = Solution.GetRandomRouteForRequest(req); //Trying to find new route for this request
 
-          while (newRoute == null || (!newRoute.TakenSlotsArrayForRequest.Any())) // doing this untill it will be found
+          while (randomRoute.Index == newRoute.Index) // if the route is the same as the previous one find other one
           {
                 newRoute = Solution.GetRandomRouteForRequest(req);
           }
-          randomRoute.FreeSlots(requestAndSlots); //Free the slots on the previous route
- 
+
+            randomRoute.FreeSlots(requestAndSlots); //Free the slots on the previous route
             if (!randomRoute.TakenSlotsArrayForRequest.Any()) //If the previous route hasn't any other request then delete it from solution
            {
                 sol.RoutesCollection.Remove(randomRoute);
