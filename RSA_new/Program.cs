@@ -23,7 +23,7 @@ namespace RSA_new {
             Solution sol =  alg.CalculateSolution();
             Console.WriteLine("---------------------------------------------------------------");
             sol.PrintSolution(99999);
-         
+            Console.ReadKey();
         }
     }
 }

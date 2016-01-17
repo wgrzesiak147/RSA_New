@@ -35,7 +35,7 @@ namespace RSA_new {
             }
         }
        
-        // /This method takes first found free slot on SlotsArray and it allocates the request
+        // /This method takes first found free slot on the links SlotsArrays and it allocates the request (int the links and the routes)
         public bool TryAlocateSlots(int numberOfSLots,int requestId)
         {
             bool result = false;
@@ -105,30 +105,29 @@ namespace RSA_new {
             return true;
         }
 
-        public CRoute(int _routeIndex, int _startNode, int _endNode, List<int> _indexes) {
-            Index = _routeIndex;
-            NodeBegin = _startNode;
-            NodeFinish = _endNode;
+        public CRoute(int routeIndex, int startNode, int endNode, List<int> indexes) {
+            Index = routeIndex;
+            NodeBegin = startNode;
+            NodeFinish = endNode;
             string route = String.Empty;
-            for (int i = 0; i < _indexes.Count; i++) {
-                route += _indexes[i].ToString() + " ";
+            for (int i = 0; i < indexes.Count; i++) {
+                route += indexes[i].ToString() + " ";
             }
 
             List<CLink> tmpLinkList = new List<CLink>();
-            for (int j = 0; j < _indexes.Count; j++) {
+            for (int j = 0; j < indexes.Count; j++) {
                 if (CGlobalManager.GlobalLinkList.Count != 0) {
                     for (int i = 0; i < CGlobalManager.GlobalLinkList.Count; i++) {
-                        if (CGlobalManager.GlobalLinkList[i].Index == _indexes[j]) {
+                        if (CGlobalManager.GlobalLinkList[i].Index == j) {
                             tmpLinkList.Add(CGlobalManager.GlobalLinkList[i]);
                         }
                     }
                 }
             }
             if (tmpLinkList.Count == 0) throw new ArgumentException("Route does not contain any links");
-            //if (!IsContinuous(tmpLinkList)) throw new ArgumentException("Route " + route + " is not traversable");
 
             _passedLinks = new List<CLink>();
-            int tmpNodeA = _startNode;
+            int tmpNodeA = startNode;
             for (int i = 0; i < tmpLinkList.Count; i++) {
                 if (i == 0 &&
                     IsContinuous(tmpLinkList)) {
@@ -147,25 +146,29 @@ namespace RSA_new {
             }
         }
 
-       
+
 
         public List<int> ReturnPassedNodes() { return _passedNodes; }
-        private bool IsContinuous(List<CLink> _linkList) {
-            int tmpNode = _linkList[0].NodeA;
-            foreach (var link in _linkList) {
+
+
+        private bool IsContinuous(List<CLink> linkList) {
+            int tmpNode = linkList[0].NodeA;
+            foreach (var link in linkList) {
                 if (link.NodeA != tmpNode) { return false; }
                 tmpNode = link.NodeB;
             }
             return true;
         }
-        public void LoadMappings(Dictionary<int, int> _slotMap) {
+
+
+        public void LoadMappings(Dictionary<int, int> slotMap) {
             if (DemandSlotMapping == null) {
-                DemandSlotMapping = _slotMap;
+                DemandSlotMapping = slotMap;
             }
         }
 
-        public void FreeSlots(KeyValuePair<int, List<int>> requestAndSlots)
-        {
+        //it free the slots and delete the entry about request from current route
+        public void FreeSlots(KeyValuePair<int, List<int>> requestAndSlots){
             List<int> slotsToFree = requestAndSlots.Value;
             foreach (var slot in slotsToFree)
             {

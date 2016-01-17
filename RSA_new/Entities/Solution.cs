@@ -9,7 +9,7 @@ namespace RSA_new.Entities
    public class Solution
    {
        public List<CRoute> RoutesCollection = new List<CRoute>();
-       private int cost = 0;
+       private int _cost = 0;
 
        public Solution(){}
        public Solution(Solution source){
@@ -18,7 +18,7 @@ namespace RSA_new.Entities
            {
                RoutesCollection.Add(new CRoute(route));
            }
-           this.cost = source.GetCost();
+           this._cost = source.GetCost();
        }
 
     
@@ -63,21 +63,21 @@ namespace RSA_new.Entities
 
 
         public int GetCost(){
-        cost = 0;
+        _cost = 0;
         if(!RoutesCollection.Any())
-                throw  new Exception("Can't get cost of empty solution!");
+                throw  new Exception("Can't get _cost of empty solution!");
         foreach (var route in RoutesCollection)
         {
-            cost += route.Distance*route.TakenSlotsCount;
+            _cost += route.Distance*route.TakenSlotsCount;
         }
-          return cost;
+          return _cost;
        }
 
        public void PrintSolution(int solutionId)
        {
           string  result = "";
           result+= "Solution {" +solutionId + "} ";
-          result += "Cost: {" + cost + "} \n";
+          result += "Cost: {" + _cost + "} \n";
             foreach (var route in RoutesCollection)
            {
                foreach (var requestAndSlots in route.TakenSlotsArrayForRequest)

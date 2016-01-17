@@ -60,13 +60,13 @@ namespace RSA_new
             return bestSol;
         }
 
-       private Solution MakeMutation(Solution sol)
-       {
+       //Method that tries to take first request from random route and tries to relocate it to other route ( if allocation is impossible then returning same solution)
+       private Solution MakeMutation(Solution sol){
           _counter++;
           Random rnd = new Random();
           int random = rnd.Next(sol.RoutesCollection.Count - 1); //find random route
           CRoute randomRoute = sol.RoutesCollection.ElementAt(random);
-          var requestAndSlots = randomRoute.TakenSlotsArrayForRequest.FirstOrDefault(); //TODO: For now its not random just firstOrDefault
+          var requestAndSlots = randomRoute.TakenSlotsArrayForRequest.FirstOrDefault(); //TODO: For now its not random just firstOrDefault for better optimization it should be random
            while (requestAndSlots.Value == null) //if there is no request alocated find other route with allocated request
            {
                random = rnd.Next(sol.RoutesCollection.Count - 1); 
@@ -76,16 +76,12 @@ namespace RSA_new
 
           CRequest req = CGlobalManager.GlobalRequestList.FirstOrDefault(x => x.Id == requestAndSlots.Key);// we are looking for this request and one more time randomly allocating somewhere
           CRoute newRoute = Solution.GetRandomRouteForRequest(req,randomRoute.Index); //Trying to find new route for this request
-          if (newRoute == null)
+          if (newRoute == null){return sol;} //if the new route is null it means that the slot allocation for other route was impossible
+          randomRoute.FreeSlots(requestAndSlots); //Free the slots on the previous route
+          if (!randomRoute.TakenSlotsArrayForRequest.Any()) //If the previous route hasn't any other request then delete it from solution
           {
-               return sol;
-          }
-
-            randomRoute.FreeSlots(requestAndSlots); //Free the slots on the previous route
-           if (!randomRoute.TakenSlotsArrayForRequest.Any()) //If the previous route hasn't any other request then delete it from solution
-           {
                 sol.RoutesCollection.Remove(randomRoute);
-           }
+          }
           sol.RoutesCollection.Add(newRoute);
           sol.PrintSolution(_counter);
           return sol;
