@@ -30,7 +30,7 @@ namespace RSA_new.Entities
            int random = rnd.Next(routes.Count() - 1);
            CRoute randomRoute = routes.ElementAt(random); //we take random route 
            return randomRoute;
-            // here we have draw random channels/slots?? we have to delete this route flor CGlobal
+            // here we have draw random channels/slots?? we have to delete this route flor CGlobal //TODO : blocked untill slots solution will be solved
         }
 
 
