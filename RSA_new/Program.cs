@@ -21,6 +21,7 @@ namespace RSA_new {
 
             AnnealingAlgorithm alg = new AnnealingAlgorithm();
             Solution sol =  alg.CalculateSolution();
+            Console.WriteLine("---------------------------------------------------------------");
             sol.PrintSolution(99999);
          
         }
