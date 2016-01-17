@@ -17,6 +17,9 @@ namespace RSA_new.Entities
             Id = id;
             StartNode = startNode;
             EndNode = endNode;
+            while (size%10 != 0){
+                size++;
+            }
             Size = size;
         }
    
