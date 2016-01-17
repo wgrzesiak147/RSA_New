@@ -10,6 +10,16 @@ namespace RSA_new.Entities
    {
        public List<CRoute> RoutesCollection = new List<CRoute>();
        private int cost = 0;
+
+       public Solution()
+       {
+           
+       }
+       public Solution(Solution source)
+       {
+          Solution result = new Solution();
+          result.RoutesCollection = new List<CRoute>(RoutesCollection);
+       }
         public Solution GetRandomSolution(){
             foreach (var request in CGlobalManager.GlobalRequestList)
             {
@@ -34,7 +44,8 @@ namespace RSA_new.Entities
               randomRoute = routes.ElementAt(random); //we take random route 
               slotsQuantity = randomRoute.DemandSlotMapping[request.Size];
            }
-
+  
+    
             return randomRoute;
         }
 

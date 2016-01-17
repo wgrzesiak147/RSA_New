@@ -26,8 +26,8 @@ namespace RSA_new
             Solution sol = new Solution();
             sol.GetRandomSolution();  //creating start solution
             sol.PrintSolution(counter);
-            Solution bestSol = sol;   //start solution is automaticaly best solution
-            Solution _sol = sol;      //next solution
+            Solution bestSol = new Solution(sol);   //start solution is automaticaly best solution
+            Solution _sol = new Solution(sol);      //next solution
 
             int costSol, cost_Sol, costBestSol; //cost of current solution, cost of next solution, cost of best solution
             costSol = sol.GetCost();
@@ -37,7 +37,7 @@ namespace RSA_new
                 _sol = MakeMutation(sol);       // we take next random solution
                 cost_Sol = _sol.GetCost();      // taking the cost of next solution
                 if (cost_Sol < costBestSol) {     //checking if the new solution is better than old one
-                     bestSol = _sol;
+                     bestSol = new Solution(_sol);
                     costBestSol = cost_Sol;
                 }
                 #region algorithm calculation ...
@@ -50,7 +50,7 @@ namespace RSA_new
                     Random rnd = new Random();
                     double x = (rnd.Next(10000)) / 10000.0;  // random number <0, 1)
                     if (x < Math.Exp(((-delta) / _startTemperature))){
-                        sol = _sol;
+                        sol = new Solution(_sol);
                         costSol = cost_Sol;
                     }
                 }

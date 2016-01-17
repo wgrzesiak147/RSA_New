@@ -22,4 +22,3 @@ C:\Studia\Goścień\C#\RSA_New\RSA_new\bin\Debug\RSA_new.pdb
 C:\Studia\Goścień\C#\RSA_New\RSA_new\obj\Debug\RSA_new.csprojResolveAssemblyReference.cache
 C:\Studia\Goścień\C#\RSA_New\RSA_new\obj\Debug\RSA_new.exe
 C:\Studia\Goścień\C#\RSA_New\RSA_new\obj\Debug\RSA_new.pdb
-C:\GIT\RSA_New\RSA_new\obj\Debug\RSA_new.csprojResolveAssemblyReference.cache
