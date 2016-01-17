@@ -15,7 +15,27 @@ namespace RSA_new {
         public Dictionary<int, int> DemandSlotMapping = null;
         public bool[] TakenSlotsArray = new bool[40];
         public Dictionary<int,List<int>>  TakenSlotsArrayForRequest = new Dictionary<int, List<int>>(); //key = requestID  value = list of taken slots indexes
-       // /This method takes first found free slot on SlotsArray and it allocates the request
+
+        public CRoute(CRoute source)
+        {
+            passedNodes = source.passedNodes;
+            passedLinks = source.passedLinks;
+            Index = source.Index;
+            NodeBegin = source.NodeBegin;
+            NodeFinish = source.NodeFinish;
+            Distance = source.Distance;
+            TakenSlotsCount = source.TakenSlotsCount;
+            DemandSlotMapping = source.DemandSlotMapping;
+            TakenSlotsArray = source.TakenSlotsArray;
+            TakenSlotsArrayForRequest = new Dictionary<int, List<int>>(); //source.TakenSlotsArrayForRequest;
+            foreach (var requestSlots in source.TakenSlotsArrayForRequest)
+            {
+                List<int> slots = requestSlots.Value.ToList();
+                TakenSlotsArrayForRequest.Add(requestSlots.Key,slots);
+            }
+        }
+       
+        // /This method takes first found free slot on SlotsArray and it allocates the request
         public bool TryAlocateSlots(int numberOfSLots,int requestId){
             for (int i = 0; i < TakenSlotsArray.Length; i++)
             {
@@ -101,6 +121,8 @@ namespace RSA_new {
                 Distance += link.Distance;
             }
         }
+
+       
 
         public List<int> ReturnPassedNodes() { return passedNodes; }
         private bool IsContinuous(List<CLink> _linkList) {

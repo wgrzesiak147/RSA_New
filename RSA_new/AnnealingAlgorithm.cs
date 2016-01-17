@@ -37,7 +37,17 @@ namespace RSA_new
                 _sol = MakeMutation(sol);       // we take next random solution
                 cost_Sol = _sol.GetCost();      // taking the cost of next solution
                 if (cost_Sol < costBestSol) {     //checking if the new solution is better than old one
+                    var tmp = _sol.RoutesCollection.FirstOrDefault(x => x.TakenSlotsArrayForRequest.Count == 0);
+                    if (tmp != null)
+                    {
+                        Console.WriteLine("YEAAAH");
+                    }
                      bestSol = new Solution(_sol);
+                    var tmp2= bestSol.RoutesCollection.FirstOrDefault(x => x.TakenSlotsArrayForRequest.Count == 0);
+                    if (tmp2 != null)
+                    {
+                        Console.WriteLine("YEAAAH");
+                    }
                     costBestSol = cost_Sol;
                 }
                 #region algorithm calculation ...
@@ -75,12 +85,8 @@ namespace RSA_new
            }
 
           CRequest req = CGlobalManager.GlobalRequestList.FirstOrDefault(x => x.Id == requestAndSlots.Key);// we are looking for this request and one more time randomly allocating somewhere
-          CRoute newRoute = Solution.GetRandomRouteForRequest(req); //Trying to find new route for this request
+          CRoute newRoute = Solution.GetRandomRouteForRequest(req,randomRoute.Index); //Trying to find new route for this request
 
-          while (randomRoute.Index == newRoute.Index) // if the route is the same as the previous one find other one
-          {
-                newRoute = Solution.GetRandomRouteForRequest(req);
-          }
 
             randomRoute.FreeSlots(requestAndSlots); //Free the slots on the previous route
             if (!randomRoute.TakenSlotsArrayForRequest.Any()) //If the previous route hasn't any other request then delete it from solution

@@ -17,19 +17,23 @@ namespace RSA_new.Entities
        }
        public Solution(Solution source)
        {
-           this.RoutesCollection = new List<CRoute>(source.RoutesCollection);
+           this.RoutesCollection =  new List<CRoute>(); //new List<CRoute>(source.RoutesCollection);
+           foreach (var route in source.RoutesCollection)
+           {
+               RoutesCollection.Add(new CRoute(route));
+           }
            this.cost = source.GetCost();
        }
         public Solution GetRandomSolution(){
             foreach (var request in CGlobalManager.GlobalRequestList)
             {
-               CRoute randomRoute = GetRandomRouteForRequest(request);
+               CRoute randomRoute = GetRandomRouteForRequest(request,-1);
                RoutesCollection.Add(randomRoute);
             }
             return this;
         }
 
-       public static CRoute GetRandomRouteForRequest(CRequest request)  {
+       public static CRoute GetRandomRouteForRequest(CRequest request, int index)  {
            List<CRoute> routes =
                CGlobalManager.GlobalRoutesList.Where(
                    x => x.NodeBegin == request.StartNode && x.NodeFinish == request.EndNode).ToList();  //linq that takes all routes for this request
@@ -37,6 +41,11 @@ namespace RSA_new.Entities
            Random rnd = new Random();
            int random = rnd.Next(routes.Count() - 1);
            CRoute randomRoute = routes.ElementAt(random); //we take random route 
+           while (randomRoute.Index == index)
+           {
+               random = rnd.Next(routes.Count() - 1);
+               randomRoute = routes.ElementAt(random);
+            }
            var slotsQuantity = randomRoute.DemandSlotMapping[request.Size]; //we are looking for slots quantity for this request size
            while (!randomRoute.TryAlocateSlots(slotsQuantity,request.Id)) //When there is no free slots we have to find new random route TODO: if no route will be found propably stack overflow
            {
