@@ -82,7 +82,7 @@ namespace RSA_new.Entities
                    string slots = "";
                     foreach (var slot in requestAndSlots.Value)
                     {
-                        slots += slot;
+                        slots += slot + " ";
                     }
                     result += " TakenSlots: {" + slots + "} \n";
                 }

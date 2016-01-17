@@ -5,8 +5,8 @@ using System.Text;
 
 namespace RSA_new {
     public class CRoute {
-        private List<int> passedNodes;
-        private List<CLink> passedLinks;
+        private readonly List<int> _passedNodes;
+        private readonly List<CLink> _passedLinks;
         public int Index { get; set; } = -1;
         public int NodeBegin { get; set; } = -1;
         public int NodeFinish { get; set; } = -1;
@@ -18,8 +18,8 @@ namespace RSA_new {
 
         public CRoute(CRoute source)
         {
-            passedNodes = source.passedNodes;
-            passedLinks = source.passedLinks;
+            _passedNodes = source._passedNodes;
+            _passedLinks = source._passedLinks;
             Index = source.Index;
             NodeBegin = source.NodeBegin;
             NodeFinish = source.NodeFinish;
@@ -36,24 +36,47 @@ namespace RSA_new {
         }
        
         // /This method takes first found free slot on SlotsArray and it allocates the request
-        public bool TryAlocateSlots(int numberOfSLots,int requestId){
-            for (int i = 0; i < TakenSlotsArray.Length; i++)
+        public bool TryAlocateSlots(int numberOfSLots,int requestId)
+        {
+            bool result = false;
+            int index = -1;
+            while (!result)
             {
-                if (TakenSlotsArray[i] == false && (i + numberOfSLots) < TakenSlotsArray.Length)
+                index++;
+                foreach (var link in _passedLinks)
                 {
-                    if (CheckIfAllocationPossible(numberOfSLots, i))
+                    CLink currLink = CGlobalManager.GlobalLinkList.FirstOrDefault(x => x.Index == link.Index);
+                    if (currLink != null)
                     {
-                        AllocateSlots(numberOfSLots, i, requestId);
-                        return true;
+                        result = currLink.CheckIfAllocationPossible(numberOfSLots, index);
+                        if (result == false)
+                        {
+                            break;
+                        }
                     }
                 }
             }
+            foreach (var link in _passedLinks)
+            {
+                CLink currLink = CGlobalManager.GlobalLinkList.FirstOrDefault(x => x.Index == link.Index);
+                if (currLink != null)
+                {
+                    currLink.AllocateSlots(numberOfSLots, index,requestId);
+                }
+            }
+
+            if (CheckIfAllocationPossible(numberOfSLots,index))
+            {
+            AllocateSlots(numberOfSLots, index, requestId);
+            return true;
+            }
             return false;
+
         }
 
-        private void AllocateSlots(int numberOfSLots, int i, int requestId) //in this method we are sure that allocation is possible
+        private void AllocateSlots(int numberOfSLots, int index, int requestId) //in this method we are sure that allocation is possible
         {
-            for (int j = i; j < numberOfSLots; j++)
+            for (int j = index; j < index + numberOfSLots; j++)
             {
                TakenSlotsArray[j] = true ;
                 TakenSlotsCount++;
@@ -70,9 +93,10 @@ namespace RSA_new {
 
         private bool CheckIfAllocationPossible(int numberOfSLots, int index) //checking if allocation is possible for specified number of slots
         {
-            for (int j = index; j < numberOfSLots; j++)
+            for (int j = index; j < index + numberOfSLots; j++)
             {
-                if(TakenSlotsArray[j] == true) //if any of watched sltos is taken (true) then allocation failed and return false
+                if (j >= TakenSlotsArray.Length) return false;
+                if (TakenSlotsArray[j] == true) //if any of watched sltos is taken (true) then allocation failed and return false
                 {
                     return false;
                 }
@@ -102,29 +126,29 @@ namespace RSA_new {
             if (tmpLinkList.Count == 0) throw new ArgumentException("Route does not contain any links");
             //if (!IsContinuous(tmpLinkList)) throw new ArgumentException("Route " + route + " is not traversable");
 
-            passedLinks = new List<CLink>();
+            _passedLinks = new List<CLink>();
             int tmpNodeA = _startNode;
             for (int i = 0; i < tmpLinkList.Count; i++) {
                 if (i == 0 &&
                     IsContinuous(tmpLinkList)) {
-                    passedLinks = tmpLinkList;
+                    _passedLinks = tmpLinkList;
                     break;
                 }
-                passedLinks.Add(new CLink(tmpLinkList.Find(x => x.NodeA == tmpNodeA)));
-                tmpNodeA = passedLinks[passedLinks.Count - 1].NodeB;
+                _passedLinks.Add(new CLink(tmpLinkList.Find(x => x.NodeA == tmpNodeA)));
+                tmpNodeA = _passedLinks[_passedLinks.Count - 1].NodeB;
             }
-            passedNodes = new List<int>(
-                from cLink in passedLinks
+            _passedNodes = new List<int>(
+                from cLink in _passedLinks
                 select cLink.NodeA);
-            passedNodes.Add(NodeFinish);
-            foreach (var link in passedLinks) {
+            _passedNodes.Add(NodeFinish);
+            foreach (var link in _passedLinks) {
                 Distance += link.Distance;
             }
         }
 
        
 
-        public List<int> ReturnPassedNodes() { return passedNodes; }
+        public List<int> ReturnPassedNodes() { return _passedNodes; }
         private bool IsContinuous(List<CLink> _linkList) {
             int tmpNode = _linkList[0].NodeA;
             foreach (var link in _linkList) {
