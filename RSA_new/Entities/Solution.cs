@@ -9,7 +9,6 @@ namespace RSA_new.Entities
    public class Solution
    {
        public List<CRoute> RoutesCollection = new List<CRoute>();
-       private int cost = 0;
         
         public Solution GetRandomSolution(){
             foreach (var request in CGlobalManager.GlobalRequestList)
@@ -41,6 +40,7 @@ namespace RSA_new.Entities
 
 
         public int GetCost(){
+        int cost = 0;
         if(!RoutesCollection.Any())
                 throw  new Exception("Can't get cost of empty solution!");
         foreach (var route in RoutesCollection)
