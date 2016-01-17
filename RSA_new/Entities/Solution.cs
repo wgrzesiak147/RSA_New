@@ -19,6 +19,7 @@ namespace RSA_new.Entities
        {
           Solution result = new Solution();
           result.RoutesCollection = new List<CRoute>(RoutesCollection);
+          result.cost = cost;
        }
         public Solution GetRandomSolution(){
             foreach (var request in CGlobalManager.GlobalRequestList)
