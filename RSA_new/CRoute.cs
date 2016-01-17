@@ -27,7 +27,7 @@ namespace RSA_new {
             TakenSlotsCount = source.TakenSlotsCount;
             DemandSlotMapping = source.DemandSlotMapping;
             TakenSlotsArray = source.TakenSlotsArray;
-            TakenSlotsArrayForRequest = new Dictionary<int, List<int>>(); //source.TakenSlotsArrayForRequest;
+            TakenSlotsArrayForRequest = new Dictionary<int, List<int>>(); 
             foreach (var requestSlots in source.TakenSlotsArrayForRequest)
             {
                 List<int> slots = requestSlots.Value.ToList();

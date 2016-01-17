@@ -12,7 +12,7 @@ namespace RSA_new
        private double _startTemperature;
        private readonly double _endTemperature;
        private readonly double _annealingParameter;
-       private int counter = 0;
+       private int _counter = 0;
 
       //Constructor initializes the algorithms parameters
        public AnnealingAlgorithm(double startTemperature = 1000, double endTemperature = 10, double annealingParameter = 0.99){
@@ -25,7 +25,7 @@ namespace RSA_new
        public Solution CalculateSolution(){  
             Solution sol = new Solution();
             sol.GetRandomSolution();  //creating start solution
-            sol.PrintSolution(counter);
+            sol.PrintSolution(_counter);
             Solution bestSol = new Solution(sol);   //start solution is automaticaly best solution
             Solution _sol = new Solution(sol);      //next solution
 
@@ -36,19 +36,9 @@ namespace RSA_new
             while (_startTemperature > _endTemperature) {   //Annealing algorithm starts iterate here
                 _sol = MakeMutation(sol);       // we take next random solution
                 cost_Sol = _sol.GetCost();      // taking the cost of next solution
-                if (cost_Sol < costBestSol) {     //checking if the new solution is better than old one
-                    var tmp = _sol.RoutesCollection.FirstOrDefault(x => x.TakenSlotsArrayForRequest.Count == 0);
-                    if (tmp != null)
-                    {
-                        Console.WriteLine("YEAAAH");
-                    }
+                if (cost_Sol < costBestSol){     //checking if the new solution is better than old one
                      bestSol = new Solution(_sol);
-                    var tmp2= bestSol.RoutesCollection.FirstOrDefault(x => x.TakenSlotsArrayForRequest.Count == 0);
-                    if (tmp2 != null)
-                    {
-                        Console.WriteLine("YEAAAH");
-                    }
-                    costBestSol = cost_Sol;
+                     costBestSol = cost_Sol;
                 }
                 #region algorithm calculation ...
                 double delta = cost_Sol - costSol;
@@ -72,7 +62,7 @@ namespace RSA_new
 
        private Solution MakeMutation(Solution sol)
        {
-          counter++;
+          _counter++;
           Random rnd = new Random();
           int random = rnd.Next(sol.RoutesCollection.Count - 1); //find random route
           CRoute randomRoute = sol.RoutesCollection.ElementAt(random);
@@ -89,12 +79,12 @@ namespace RSA_new
 
 
             randomRoute.FreeSlots(requestAndSlots); //Free the slots on the previous route
-            if (!randomRoute.TakenSlotsArrayForRequest.Any()) //If the previous route hasn't any other request then delete it from solution
+           if (!randomRoute.TakenSlotsArrayForRequest.Any()) //If the previous route hasn't any other request then delete it from solution
            {
                 sol.RoutesCollection.Remove(randomRoute);
            }
           sol.RoutesCollection.Add(newRoute);
-          sol.PrintSolution(counter);
+          sol.PrintSolution(_counter);
           return sol;
        }
    }

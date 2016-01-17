@@ -11,19 +11,17 @@ namespace RSA_new.Entities
        public List<CRoute> RoutesCollection = new List<CRoute>();
        private int cost = 0;
 
-       public Solution()
-       {
-           
-       }
-       public Solution(Solution source)
-       {
-           this.RoutesCollection =  new List<CRoute>(); //new List<CRoute>(source.RoutesCollection);
+       public Solution(){}
+       public Solution(Solution source){
+           this.RoutesCollection =  new List<CRoute>(); 
            foreach (var route in source.RoutesCollection)
            {
                RoutesCollection.Add(new CRoute(route));
            }
            this.cost = source.GetCost();
        }
+
+    
         public Solution GetRandomSolution(){
             foreach (var request in CGlobalManager.GlobalRequestList)
             {

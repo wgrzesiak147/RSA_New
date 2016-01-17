@@ -9,8 +9,8 @@ namespace RSA_new {
         public static List<CRoute> GlobalRoutesList = new List<CRoute>();
         public static List<CLink> GlobalLinkList = new List<CLink>();
         public static List<CRequest> GlobalRequestList = new List<CRequest>(); 
-        public static int linkCounter = 0;
-        public static int requestCounter = 0;
+        public static int LinkCounter = 0;
+        public static int RequestCounter = 0;
 
 
 
@@ -48,44 +48,7 @@ namespace RSA_new {
             CRequest result = new CRequest(requestId,startNode, endNode, capacity);
             return result;
         }
-        /*
-        public static void LoadRequests(string _requestFilePath)
-        {
-            if (GlobalRequestList.Count == 0)
-            {
-                CGlobalManager _manager = new CGlobalManager();
-                using (StreamReader requestFile = new StreamReader(_requestFilePath))
-                {
-                    int LineCounter = 0;
-                    int RequestQuantity = 0;
-                    string line;
-                    while((line = requestFile.ReadLine()) != null) {
-                        if (line[0] == ' ') { line = line.Remove(0, 1); }
-                        for (int i = 0; i < line.Length; i++) {
-                            if (i > 0 &&
-                                line[i-1] == ' ') {
-                                line = line.Remove(i, 1);
-                            }
-                        }
-                        if (LineCounter == 0)
-                        {
-                            Int32.TryParse(line, out RequestQuantity);
-                            LineCounter++;
-                        }
-                        else
-                        {
-                            List<int> _line = line.Split(' ').Select(Int32.Parse).ToList();
-                            List<CRequest> RequestList = _manager.CalculateRequestFromLine(_line);
-                            foreach (var request in RequestList)
-                            {
-                                GlobalRequestList.Add(request);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        */
+
 
         public static void LoadLinks(string _topologyFilePath)
         {
@@ -94,8 +57,8 @@ namespace RSA_new {
                 CGlobalManager _manager = new CGlobalManager();
                 using (StreamReader topologyFile = new StreamReader(_topologyFilePath))
                 {
-                    int NodeQuantity = 0;
-                    int LinkQuantity = 0;
+                    int nodeQuantity = 0;
+                    int linkQuantity = 0;
                     int lineCounter = 0;
                     
                     string line;
@@ -103,13 +66,13 @@ namespace RSA_new {
                     {
                         if (lineCounter == 0)
                         {
-                            Int32.TryParse(line, out NodeQuantity);
+                            Int32.TryParse(line, out nodeQuantity);
                             lineCounter++;
                         }
 
                         else if (lineCounter == 1)
                         {
-                            Int32.TryParse(line, out LinkQuantity);
+                            Int32.TryParse(line, out linkQuantity);
                             lineCounter++;
                         }
 
@@ -188,25 +151,11 @@ namespace RSA_new {
             {
                 if (line[i] > 0)
                 {
-                    result.Add(new CLink(linkCounter, nodeAIndex, i, line[i]));
-                    linkCounter++;
+                    result.Add(new CLink(LinkCounter, nodeAIndex, i, line[i]));
+                    LinkCounter++;
                 }
             }
             return result;     
-        }
-        /*
-        private List<CRequest> CalculateRequestFromLine(List<int> line)
-        {
-            List<CRequest> result = new List<CRequest>();
-            for (int i = 0; i > line.Count; i++)
-            {
-                if (line.ElementAt(i) > 0)
-                {
-                    result.Add(new CRequest(line[i], line[i+1], line[i+2]));
-                }
-            }
-            return result;
         } 
-        */
     }
 }
