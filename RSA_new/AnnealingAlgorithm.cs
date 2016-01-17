@@ -62,14 +62,21 @@ namespace RSA_new
           Random rnd = new Random();
           int random = rnd.Next(sol.RoutesCollection.Count - 1); //find random route
           CRoute randomRoute = sol.RoutesCollection.ElementAt(random);
-          var value = randomRoute.TakenSlotsArrayForRequest.GroupBy(x=>x.Key); //TODO CHECK IF NULL??
+          var requestAndSlots = randomRoute.TakenSlotsArrayForRequest.FirstOrDefault(); //TODO: For now its not random just firstOrDefault
+           while (requestAndSlots.Value == null) //if there is no request alocated find other route with allocated request
+           {
+               random = rnd.Next(sol.RoutesCollection.Count - 1); 
+               randomRoute = sol.RoutesCollection.ElementAt(random);
+               requestAndSlots = randomRoute.TakenSlotsArrayForRequest.FirstOrDefault();
+           }
 
-          //int requestID = value.Key;
-         // CGlobalManager.GlobalRequestList.FirstOrDefault(x => x.Id == requestID);
-          
-         // Solution.GetRandomValuesForRequest(new CRequest()) //TODO : blocked untill slots solution will be solved
+          CRequest req = CGlobalManager.GlobalRequestList.FirstOrDefault(x => x.Id == requestAndSlots.Key);// we are looking for this request and one more time randomly allocating somewhere
+          CRoute newRoute = Solution.GetRandomRouteForRequest(req);
+          randomRoute.FreeSlots(requestAndSlots); //Free the slots on the previous route
 
-            return sol;
+          sol.RoutesCollection.Remove(randomRoute);
+          sol.RoutesCollection.Add(newRoute);
+          return sol;
        }
    }
 }

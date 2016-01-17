@@ -14,13 +14,13 @@ namespace RSA_new.Entities
         public Solution GetRandomSolution(){
             foreach (var request in CGlobalManager.GlobalRequestList)
             {
-               CRoute randomRoute = GetRandomValuesForRequest(request);
+               CRoute randomRoute = GetRandomRouteForRequest(request);
                RoutesCollection.Add(randomRoute);
             }
             return this;
         }
 
-       public static CRoute GetRandomValuesForRequest(CRequest request){
+       public static CRoute GetRandomRouteForRequest(CRequest request)  {
            List<CRoute> routes =
                CGlobalManager.GlobalRoutesList.Where(
                    x => x.NodeBegin == request.StartNode && x.NodeFinish == request.EndNode).ToList();  //linq that takes all routes for this request
@@ -34,8 +34,8 @@ namespace RSA_new.Entities
               random = rnd.Next(routes.Count() - 1);
               randomRoute = routes.ElementAt(random); //we take random route 
               slotsQuantity = randomRoute.DemandSlotMapping[request.Size];
-            }
-            randomRoute.TakenSlotsCount += slotsQuantity;
+           }
+          //  randomRoute.TakenSlotsCount += slotsQuantity;
             return randomRoute;
         }
 

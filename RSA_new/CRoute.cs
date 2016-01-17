@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace RSA_new {
     public class CRoute {
@@ -10,7 +11,7 @@ namespace RSA_new {
         public int NodeBegin { get; set; } = -1;
         public int NodeFinish { get; set; } = -1;
         public int Distance { get; set; } = 0;
-        public int TakenSlotsCount { get; set; } = 0;
+        public int TakenSlotsCount { get; private set; } = 0;
         public Dictionary<int, int> DemandSlotMapping = null;
         public bool[] TakenSlotsArray = new bool[40];
         public Dictionary<int,List<int>>  TakenSlotsArrayForRequest = new Dictionary<int, List<int>>(); //key = requestID  value = list of taken slots indexes
@@ -35,6 +36,7 @@ namespace RSA_new {
             for (int j = i; j < numberOfSLots; j++)
             {
                TakenSlotsArray[j] = true ;
+                TakenSlotsCount++;
 
                if (!TakenSlotsArrayForRequest.ContainsKey(requestId))
                 {
@@ -113,6 +115,17 @@ namespace RSA_new {
             if (DemandSlotMapping == null) {
                 DemandSlotMapping = _slotMap;
             }
+        }
+
+        public void FreeSlots(KeyValuePair<int, List<int>> requestAndSlots)
+        {
+            List<int> slotsToFree = requestAndSlots.Value;
+            foreach (var slot in slotsToFree)
+            {
+                TakenSlotsArray[slot] = false; //free slots
+                TakenSlotsCount--;
+            }
+            TakenSlotsArrayForRequest.Remove(requestAndSlots.Key); //removing request from dictionary
         }
     }
 }
