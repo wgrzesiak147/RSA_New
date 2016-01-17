@@ -12,6 +12,7 @@ namespace RSA_new
        private double _startTemperature;
        private readonly double _endTemperature;
        private readonly double _annealingParameter;
+       private int counter = 0;
 
       //Constructor initializes the algorithms parameters
        public AnnealingAlgorithm(double startTemperature = 1000, double endTemperature = 10, double annealingParameter = 0.99){
@@ -24,6 +25,7 @@ namespace RSA_new
        public Solution CalculateSolution(){  
             Solution sol = new Solution();
             sol.GetRandomSolution();  //creating start solution
+            sol.PrintSolution(counter);
             Solution bestSol = sol;   //start solution is automaticaly best solution
             Solution _sol = sol;      //next solution
 
@@ -58,7 +60,9 @@ namespace RSA_new
             return bestSol;
         }
 
-       private Solution MakeMutation(Solution sol){
+       private Solution MakeMutation(Solution sol)
+       {
+          counter++;
           Random rnd = new Random();
           int random = rnd.Next(sol.RoutesCollection.Count - 1); //find random route
           CRoute randomRoute = sol.RoutesCollection.ElementAt(random);
@@ -76,6 +80,7 @@ namespace RSA_new
 
           sol.RoutesCollection.Remove(randomRoute);
           sol.RoutesCollection.Add(newRoute);
+          sol.PrintSolution(counter);
           return sol;
        }
    }
