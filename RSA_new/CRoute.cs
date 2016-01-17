@@ -23,6 +23,7 @@ namespace RSA_new {
                     if (CheckIfAllocationPossible(numberOfSLots, i))
                     {
                         AllocateSlots(numberOfSLots, i, requestId);
+                        return false;
                     }
                 }
             }

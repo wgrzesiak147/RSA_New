@@ -60,11 +60,16 @@ namespace RSA_new
 
        private Solution MakeMutation(Solution sol){
           Random rnd = new Random();
-          int random = rnd.Next(sol.RoutesCollection.Count - 1);
-          int startNode = sol.RoutesCollection.ElementAt(random).NodeBegin;
-          int endNode = sol.RoutesCollection.ElementAt(random).NodeFinish;
+          int random = rnd.Next(sol.RoutesCollection.Count - 1); //find random route
+          CRoute randomRoute = sol.RoutesCollection.ElementAt(random);
+          var value = randomRoute.TakenSlotsArrayForRequest.GroupBy(x=>x.Key); //TODO CHECK IF NULL??
+
+          //int requestID = value.Key;
+         // CGlobalManager.GlobalRequestList.FirstOrDefault(x => x.Id == requestID);
+          
          // Solution.GetRandomValuesForRequest(new CRequest()) //TODO : blocked untill slots solution will be solved
-          return sol;
+
+            return sol;
        }
    }
 }
