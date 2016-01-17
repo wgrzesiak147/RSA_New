@@ -104,25 +104,11 @@ namespace RSA_new {
                         else {
                             List<int> _line = line.Split(' ').Select(Int32.Parse).ToList();
                             List<int> linkIndexes = _manager.CalculateRouteFromBinary(_line);
-                            GlobalRoutesList.Add(new CRoute(lineCounter - 1, linkIndexes));
+                            if (startNodeNumber == endNodeNumber) { endNodeNumber++; }
+                            GlobalRoutesList.Add(new CRoute(lineCounter - 1, startNodeNumber, endNodeNumber, linkIndexes));
+                            if (lineCounter % 30 == 0) { endNodeNumber++; }
+                            if (lineCounter % 390 == 0) { startNodeNumber++; endNodeNumber = 0; }
                             lineCounter++;
-                            #region OLDCODE - can be deleted I think...
-                            //if (startNodeNumber == endNodeNumber) { endNodeNumber++; }
-                            //Incrementing index for route
-                            //if (currRoute != null) {
-                            //    RoutesCount++;
-                            //    AllRoutes.Add(currRoute);
-                            //}
-                            //#region Uncoment for simple checkup of line reading ;)
-                            //if (lineCounter%390 == 0) {
-                            //    int i = 0;
-                            //    i = 1 + 2;
-                            //} 
-                            //#endregion
-                            //if (lineCounter % 30 == 0) { endNodeNumber++; }
-                            //if (lineCounter % 390 == 0) { startNodeNumber++; endNodeNumber = 0; }
-                            //lineCounter++;
-                            #endregion
                         }
                     }
                 }
