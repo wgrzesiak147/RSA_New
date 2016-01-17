@@ -13,23 +13,46 @@ namespace RSA_new {
         public int TakenSlotsCount { get; set; } = 0;
         public Dictionary<int, int> DemandSlotMapping = null;
         public bool[] TakenSlotsArray = new bool[40];
-
+        public Dictionary<int,int>  TakenSlotsArrayForRequest = new Dictionary<int, int>(); //key = requestID  value = ID's of taken slots
        // /This method takes first found free slot on SlotsArray and it allocates the request
-        public bool AlocateSlots(int numberOfSLots){
+        public bool TryAlocateSlots(int numberOfSLots,int requestId){
             for (int i = 0; i < TakenSlotsArray.Length; i++)
             {
                 if (TakenSlotsArray[i] == false && (i + numberOfSLots) < TakenSlotsArray.Length)
                 {
-                    for (int j = 0; j < numberOfSLots; j++)
-                    { 
-                        TakenSlotsArray[i] = true;
-                        i++;
+                    if (CheckIfAllocationPossible(numberOfSLots, i))
+                    {
+                        AllocateSlots(numberOfSLots, i, requestId);
                     }
-                    return true;
                 }
             }
             return false;
         }
+
+        private void AllocateSlots(int numberOfSLots, int i, int requestId) //in this method we are sure that allocation is possible
+        {
+            for (int j = i; j < numberOfSLots; j++)
+            {
+               TakenSlotsArray[j] = true ;
+               TakenSlotsArrayForRequest.Add(requestId,j);
+               j++;
+            }
+         }
+
+        
+
+        private bool CheckIfAllocationPossible(int numberOfSLots, int index) //checking if allocation is possible for specified number of slots
+        {
+            for (int j = index; j < numberOfSLots; j++)
+            {
+                if(TakenSlotsArray[j] == true) //if any of watched sltos is taken (true) then allocation failed and return false
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public CRoute(int _routeIndex, int _startNode, int _endNode, List<int> _indexes) {
             Index = _routeIndex;
             NodeBegin = _startNode;

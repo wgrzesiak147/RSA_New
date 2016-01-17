@@ -29,7 +29,7 @@ namespace RSA_new.Entities
            int random = rnd.Next(routes.Count() - 1);
            CRoute randomRoute = routes.ElementAt(random); //we take random route 
            var slotsQuantity = randomRoute.DemandSlotMapping[request.Size]; //we are looking for slots quantity for this request size
-           while (!randomRoute.AlocateSlots(slotsQuantity)) //When there is no free slots we have to find new random route TODO: if no route will be found propably stack overflow
+           while (!randomRoute.TryAlocateSlots(slotsQuantity,request.Id)) //When there is no free slots we have to find new random route TODO: if no route will be found propably stack overflow
            {
               random = rnd.Next(routes.Count() - 1);
               randomRoute = routes.ElementAt(random); //we take random route 
