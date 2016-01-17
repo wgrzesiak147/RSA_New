@@ -43,7 +43,7 @@ namespace RSA_new
                 #region algorithm calculation ...
                 double delta = cost_Sol - costSol;
                 if (delta < 0){
-                    sol = _sol;
+                    sol = new Solution(_sol);
                     costSol = cost_Sol;
                 }
                 else{
