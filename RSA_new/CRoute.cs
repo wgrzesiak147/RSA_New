@@ -43,6 +43,7 @@ namespace RSA_new {
             while (!result)
             {
                 index++;
+                if (index >= TakenSlotsArray.Length) return false;
                 foreach (var link in _passedLinks)
                 {
                     CLink currLink = CGlobalManager.GlobalLinkList.FirstOrDefault(x => x.Index == link.Index);

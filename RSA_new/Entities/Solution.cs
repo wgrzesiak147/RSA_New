@@ -39,20 +39,32 @@ namespace RSA_new.Entities
            Random rnd = new Random();
            int random = rnd.Next(routes.Count() - 1);
            CRoute randomRoute = routes.ElementAt(random); //we take random route 
-           while (randomRoute.Index == index)
+           if (randomRoute.Index == index) //if index == previous route then find new route
            {
-               random = rnd.Next(routes.Count() - 1);
-               randomRoute = routes.ElementAt(random);
+             while (randomRoute.Index == index)
+                {
+                    random = rnd.Next(routes.Count() - 1);
+                    randomRoute = routes.ElementAt(random);
+
+                    var slotsQuantity = randomRoute.DemandSlotMapping[request.Size]; //we are looking for slots quantity for this request size
+                    while (!randomRoute.TryAlocateSlots(slotsQuantity, request.Id)) //When there is no free slots we have to find new random route TODO: if no route will be found propably stack overflow
+                    {
+                        random = rnd.Next(routes.Count() - 1);
+                        randomRoute = routes.ElementAt(random); //we take random route 
+                        slotsQuantity = randomRoute.DemandSlotMapping[request.Size];
+                    }
+                }
             }
-           var slotsQuantity = randomRoute.DemandSlotMapping[request.Size]; //we are looking for slots quantity for this request size
-           while (!randomRoute.TryAlocateSlots(slotsQuantity,request.Id)) //When there is no free slots we have to find new random route TODO: if no route will be found propably stack overflow
+           else 
            {
-              random = rnd.Next(routes.Count() - 1);
-              randomRoute = routes.ElementAt(random); //we take random route 
-              slotsQuantity = randomRoute.DemandSlotMapping[request.Size];
-           }
-  
-    
+                var slotsQuantity = randomRoute.DemandSlotMapping[request.Size]; //we are looking for slots quantity for this request size
+                while (!randomRoute.TryAlocateSlots(slotsQuantity, request.Id)) //When there is no free slots we have to find new random route TODO: if no route will be found propably stack overflow
+                {
+                    random = rnd.Next(routes.Count() - 1);
+                    randomRoute = routes.ElementAt(random); //we take random route 
+                    slotsQuantity = randomRoute.DemandSlotMapping[request.Size];
+                }
+            }
             return randomRoute;
         }
 
