@@ -13,10 +13,19 @@ namespace RSA_new.Entities
         public int EndNode { get; set; }
         public int Size { get; set; }
 
+        public CRequest(int id, int startNode, int endNode, int size)
+        {
+            Id = id;
+            StartNode = startNode;
+            EndNode = endNode;
+            Size = size;
+        }
+        /*
         public CRequest(int startNode, int endNode, int size){
             StartNode = startNode;
             EndNode = endNode;
             Size = size;
         }
+        */
     }
 }

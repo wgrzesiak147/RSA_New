@@ -13,7 +13,7 @@ namespace RSA_new {
         public int TakenSlotsCount { get; set; } = 0;
         public Dictionary<int, int> DemandSlotMapping = null;
         public bool[] TakenSlotsArray = new bool[40];
-        public Dictionary<int,int>  TakenSlotsArrayForRequest = new Dictionary<int, int>(); //key = requestID  value = ID's of taken slots
+        public Dictionary<int,List<int>>  TakenSlotsArrayForRequest = new Dictionary<int, List<int>>(); //key = requestID  value = list of taken slots indexes
        // /This method takes first found free slot on SlotsArray and it allocates the request
         public bool TryAlocateSlots(int numberOfSLots,int requestId){
             for (int i = 0; i < TakenSlotsArray.Length; i++)
@@ -23,7 +23,7 @@ namespace RSA_new {
                     if (CheckIfAllocationPossible(numberOfSLots, i))
                     {
                         AllocateSlots(numberOfSLots, i, requestId);
-                        return false;
+                        return true;
                     }
                 }
             }
@@ -35,8 +35,12 @@ namespace RSA_new {
             for (int j = i; j < numberOfSLots; j++)
             {
                TakenSlotsArray[j] = true ;
-               TakenSlotsArrayForRequest.Add(requestId,j);
-               j++;
+
+               if (!TakenSlotsArrayForRequest.ContainsKey(requestId))
+                {
+                    TakenSlotsArrayForRequest.Add(requestId, new List<int>());
+                }
+               TakenSlotsArrayForRequest[requestId].Add(j);
             }
          }
 
